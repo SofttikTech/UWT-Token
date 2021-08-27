@@ -16,6 +16,14 @@ module.exports = async function (deployer, network, accounts) {
 
   const deployedToken = await UnitedWorldToken.deployed();
 
+
+
+  console.log('---------------------------------------------------------------------------------');
+
+  console.log('***************************United World Token Address = ', deployedToken.address);
+
+  console.log('---------------------------------------------------------------------------------');
+
   /******************************************* TokenTimeLocks ******************************************/
 
   const _foundersFund = "0x2708Be99591dF0Dd9De809FdD6d0516836e9eD56";                            // TODO: Replace me: 10 Million & Lock
@@ -28,17 +36,24 @@ module.exports = async function (deployer, network, accounts) {
 
 
   /************************************         FOUNDER 1            ***********************************************/
-  const _releaseTimeFounder1 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 1 Year Founder Tokens Timelock
+  const _releaseTimeFounder1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Founder Tokens Timelock
   // const _releaseTimeFounder1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Founder Tokens Timelock
   const foundersTimelock1 = await deployer.deploy(TokenTimelock, deployedToken.address, _foundersFund, _releaseTimeFounder1);
   await deployedToken.mint(foundersTimelock1.address, ether(_totalSupply * 0.025));
 
 
   /************************************         FOUNDER 2         ***********************************************/
-  const _releaseTimeFounder2 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 2 Year Founder Tokens Timelock
+  const _releaseTimeFounder2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 2 Year Founder Tokens Timelock
   // const _releaseTimeFounder2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 2 Year Founder Tokens Timelock
   const foundersTimelock2 = await deployer.deploy(TokenTimelock, deployedToken.address, _foundersFund, _releaseTimeFounder2);
   await deployedToken.mint(foundersTimelock2.address, ether(_totalSupply * 0.025));
+
+
+
+
+
+
+
 
 
   /************************************         CHARITY1            ***********************************************/
@@ -57,15 +72,21 @@ module.exports = async function (deployer, network, accounts) {
   await deployedToken.mint(charityTimelockRound3.address, ether(_totalSupply * 0.1));
 
 
+
+
+
+
+
+
   /************************************         MARKETING  1          ***********************************************/
 
-  const _releaseTimeMarketing1 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(1);                        // 1 Year Reserve Tokens Timelock
+  const _releaseTimeMarketing1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   // const _releaseTimeDeveloper1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   const marketingTimelock1 = await deployer.deploy(TokenTimelock, deployedToken.address, _marketingFund, _releaseTimeMarketing1);
   await deployedToken.mint(marketingTimelock1.address, ether(_totalSupply * 0.025));
 
   /************************************         Marketing 2            ***********************************************/
-  const _releaseTimeMarketing2 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 2 Year Reserve Tokens Timelock
+  const _releaseTimeMarketing2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 2 Year Reserve Tokens Timelock
   // const _releaseTimeDeveloper2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 2 Year Reserve Tokens Timelock
   const marketingTimelock2 = await deployer.deploy(TokenTimelock, deployedToken.address, _marketingFund, _releaseTimeMarketing2);
   await deployedToken.mint(marketingTimelock2.address, ether(_totalSupply * 0.025));
@@ -73,31 +94,53 @@ module.exports = async function (deployer, network, accounts) {
 
 
 
+
+
+
+
   /************************************         COMPANY 1           ***********************************************/
-  const _releaseTimeCompany1 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 1 Year Reserve Tokens Timelock
+  const _releaseTimeCompany1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   // const _releaseTimeCompany1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   const companyTimelock1 = await deployer.deploy(TokenTimelock, deployedToken.address, _companyFund, _releaseTimeCompany1);
   await deployedToken.mint(companyTimelock1.address, ether(_totalSupply * 0.025));
 
 
   /************************************         COMPANY  2         ***********************************************/
-  const _releaseTimeCompany2 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 1 Year Reserve Tokens Timelock
+  const _releaseTimeCompany2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 1 Year Reserve Tokens Timelock
   // const _releaseTimeCompany1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   const companyTimelock2 = await deployer.deploy(TokenTimelock, deployedToken.address, _companyFund, _releaseTimeCompany2);
   await deployedToken.mint(companyTimelock2.address, ether(_totalSupply * 0.025));
 
 
+
+
+
+
+
+
+
+
   /************************************         DEVELOPER 1            ***********************************************/
-  const _releaseTimeDeveloper1 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(1);                        // 1 Year Reserve Tokens Timelock
+  const _releaseTimeDeveloper1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   // const _releaseTimeDeveloper1 = (await web3.eth.getBlock('latest')).timestamp + duration.years(1);                        // 1 Year Reserve Tokens Timelock
   const developerTimelock1 = await deployer.deploy(TokenTimelock, deployedToken.address, _developerFund, _releaseTimeDeveloper1);
   await deployedToken.mint(developerTimelock1.address, ether(_totalSupply * 0.025));
 
   /************************************         DEVELOPER2            ***********************************************/
-  const _releaseTimeDeveloper2 = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 2 Year Reserve Tokens Timelock
+  const _releaseTimeDeveloper2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 2 Year Reserve Tokens Timelock
   // const _releaseTimeDeveloper2 = (await web3.eth.getBlock('latest')).timestamp + duration.years(2);                        // 2 Year Reserve Tokens Timelock
   const developerTimelock2 = await deployer.deploy(TokenTimelock, deployedToken.address, _developerFund, _releaseTimeDeveloper2);
   await deployedToken.mint(developerTimelock2.address, ether(_totalSupply * 0.025));
+
+
+
+
+
+
+
+
+
+
 
   /************************************         LIQUIDITY            ***********************************************/
   const _releaseTimeLiquidity = (await web3.eth.getBlock('latest')).timestamp + duration.minutes(10);                        // 2 Year Reserve Tokens Timelock

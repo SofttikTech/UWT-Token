@@ -119,6 +119,7 @@ contract('UnitedWorldToken', function ([developerFund, foundersFund, charityFund
 
   describe('TokenTimeLock and Token Distributions', function () {
 
+
     it('founder should have 5 Million Token and then Lock in round 1', async function () {
       let founderTokens = BN(await this.token.balanceOf(this.foundersTimeLock1.address));
       assert.equal(founderTokens, ether("5000000"));
@@ -348,6 +349,28 @@ contract('UnitedWorldToken', function ([developerFund, foundersFund, charityFund
     it('check the balance of marketing fund', async function () {
       let marketingTokens = BN(await this.token.balanceOf(this.marketingFund));
       assert.equal(marketingTokens, ether("5000000"));
+    });
+  });
+
+  describe('Transfer ownership', async function () {
+    it.only(`should transfer ownership to the other account`, async function () {
+      const beforeOwner = await this.token.owner();
+      await this.token.transferOwnership(foundersFund);
+
+      const newOwner = await this.token.owner();
+      beforeOwner.should.not.be.equal(newOwner);
+
+      // Add Minter & mint tokens
+      await this.token.addMinter(newOwner, { from: beforeOwner })
+      // Remove the old minter
+      await this.token.renounceMinter({ from: beforeOwner })
+      await this.token.mint(this.foundersTimeLock1.address, ether("10"), { from: newOwner });
+
+      //Check that the old minter and old owner is still the minter & owner
+
+      const isMinter = await this.token.isMinter(beforeOwner, { from: beforeOwner })
+      const isOwner = await this.token.isOwner({ from: beforeOwner })
+
     });
   });
 });
